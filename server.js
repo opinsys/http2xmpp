@@ -18,6 +18,10 @@ app.use(basicAuth(function(user, pass) {
 
 var server = http.createServer(app);
 
+app.get("/", function(req, res) {
+    res.send("http2xmpp");
+});
+
 app.post("/rooms/:room", function(req, res) {
     var room = req.params.room;
     var message = "<"+req.user+"> " + req.body.message;
