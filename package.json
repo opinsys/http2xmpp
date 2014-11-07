@@ -1,0 +1,19 @@
+{
+  "name": "http2xmpp",
+  "version": "0.0.0",
+  "description": "HTTP to XMPP Gateway",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "GPLv2",
+  "dependencies": {
+    "basic-auth-connect": "^1.0.0",
+    "bluebird": "^2.3.11",
+    "body-parser": "^1.9.2",
+    "express": "^4.10.1",
+    "simple-xmpp": "^0.1.92",
+    "xmpp-ftw": "^1.16.4"
+  }
+}
