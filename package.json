@@ -10,10 +10,8 @@
   "license": "GPLv2",
   "dependencies": {
     "basic-auth-connect": "^1.0.0",
-    "bluebird": "^2.3.11",
     "body-parser": "^1.9.2",
     "express": "^4.10.1",
-    "simple-xmpp": "^0.1.92",
-    "xmpp-ftw": "^1.16.4"
+    "simple-xmpp": "^0.1.92"
   }
 }
