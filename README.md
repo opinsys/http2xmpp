@@ -22,18 +22,17 @@ credentials
 
 ## Usage
 
+The `message` field of `x-www-form-urlencoded` or `json` POST requests will be used as the message
+
     curl -u aptirepo:secret -d message="Hello all" http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
-
-or
-
-     echo "Hello again" | curl -u aptirepo:secret -H "content-type: text/plain" -d @- http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
-
+    curl -u aptirepo:secret -H "Content-Type: application/json" -d '{ "message": "Hello json" }' http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
 
 Also the full content of the request body is used as the message if the content
-type if is `text/plain` or completely missing. This is useful with the [uri
-Ansible module][uri]
+type if is `text/plain` or completely missing.
 
+     echo "Hello again" | curl -u aptirepo:secret -H "Content-Type: text/plain" -d @- http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
 
+This is useful with the [uri Ansible module][uri]
 
 ```yaml
 - name: Log update to http2xmpp
