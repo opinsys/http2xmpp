@@ -17,7 +17,7 @@ app.use(basicAuth(function(user, pass) {
     return config.credentials[user] === pass;
 }));
 
-app.use(function(req, res, next) {
+app.use(function parseMessage(req, res, next) {
     if (!{POST: 1, PUT: 1}[req.method]) return next();
 
     var type = req.headers["content-type"] || "text/plain";
@@ -29,6 +29,16 @@ app.use(function(req, res, next) {
         next();
     }));
 
+});
+
+app.use(function assertMessage(req, res, next) {
+    if (!{POST: 1, PUT: 1}[req.method]) return next();
+    if (req.body.message) return next();
+    return res.status(400).json({
+        error: "Cannot find message from your request",
+        method: req.method,
+        url: req.url
+    });
 });
 
 var server = http.createServer(app);
