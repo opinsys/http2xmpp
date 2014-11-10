@@ -24,15 +24,21 @@ credentials
 
 The `message` field of `x-www-form-urlencoded` or `json` POST requests will be used as the message
 
-    curl -u aptirepo:secret -d message="Hello all" http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
-    curl -u aptirepo:secret -H "Content-Type: application/json" -d '{ "message": "Hello json" }' http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
+    curl -d message="Hello all" -u aptirepo:secret http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
+    curl -d '{ "message": "Hello json" }' -u aptirepo:secret -H "Content-Type:application/json" http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
 
-Also the full content of the request body is used as the message if the content
-type if is `text/plain` or completely missing.
+The full content of the request body is used as the message if the content type
+if is `text/plain` or completely missing.
 
-     echo "Hello again" | curl -u aptirepo:secret -H "Content-Type: text/plain" -d @- http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
+HTTP POST
 
-This is useful with the [uri Ansible module][uri]
+     curl -d "Hello from POST" -u aptirepo:secret -H "Content-Type: text/plain" http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
+
+HTTP PUT
+
+     echo "Hello from PUT" | curl -u aptirepo:secret -T - http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
+
+Usage from the [Ansible uri module][uri]
 
 ```yaml
 - name: Log update to http2xmpp

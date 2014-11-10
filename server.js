@@ -18,7 +18,8 @@ app.use(basicAuth(function(user, pass) {
 }));
 
 app.use(function(req, res, next) {
-    if (req.method !== "POST") return next();
+    if (!{POST: 1, PUT: 1}[req.method]) return next();
+
     var type = req.headers["content-type"] || "text/plain";
     if (type.indexOf("text/plain") === -1) return next();
     req.pipe(concat(function(data) {
@@ -36,24 +37,27 @@ app.get("/", function(req, res) {
     res.send("http2xmpp");
 });
 
-app.post("/rooms/:room", function(req, res) {
-    var room = req.params.room;
-    var message = "<"+req.user+"> " + req.body.message;
+["post", "put"].forEach(function(method) {
+    app[method]("/rooms/:room", function(req, res) {
+        var room = req.params.room;
+        var message = "<"+req.user+"> " + req.body.message;
 
-    console.log("Sending message to room", room, message);
-    xmpp.join(room + "/http2xmpp");
-    xmpp.send(room, message, true);
-    res.json({ok:true});
+        console.log("Sending message to room", room, message);
+        xmpp.join(room + "/http2xmpp");
+        xmpp.send(room, message, true);
+        res.json({ok:true});
+    });
+
+    app[method]("/users/:user", function(req, res) {
+        var user = req.params.user;
+        var message = "<"+req.user+"> " + req.body.message;
+
+        console.log("Sending message to user", user, message);
+        xmpp.send(user, message);
+        res.json({ok:true});
+    });
 });
 
-app.post("/users/:user", function(req, res) {
-    var user = req.params.user;
-    var message = "<"+req.user+"> " + req.body.message;
-
-    console.log("Sending message to user", user, message);
-    xmpp.send(user, message);
-    res.json({ok:true});
-});
 
 
 xmpp.connect({
