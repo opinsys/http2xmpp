@@ -5,6 +5,7 @@ var xmpp = require('simple-xmpp');
 var http = require("http");
 var bodyParser = require("body-parser");
 var basicAuth = require('basic-auth-connect');
+var concat = require("concat-stream");
 
 var config = require("./config");
 
@@ -15,6 +16,19 @@ app.use(basicAuth(function(user, pass) {
     console.log("auth", user);
     return config.credentials[user] === pass;
 }));
+
+app.use(function(req, res, next) {
+    if (req.method !== "POST") return next();
+    var type = req.headers["content-type"] || "text/plain";
+    if (type.indexOf("text/plain") === -1) return next();
+    req.pipe(concat(function(data) {
+        req.body = {
+            message: data.toString()
+        };
+        next();
+    }));
+
+});
 
 var server = http.createServer(app);
 

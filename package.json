@@ -11,6 +11,7 @@
   "dependencies": {
     "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.9.2",
+    "concat-stream": "^1.4.6",
     "express": "^4.10.1",
     "simple-xmpp": "^0.1.92"
   }
