@@ -61,6 +61,10 @@ xmpp.connect({
     password: config.password
 });
 
+xmpp.on('error', function(err) {
+    console.error(err);
+});
+
 xmpp.on('online', function(data) {
     console.log('Connected with JID: ' + data.jid.user);
     console.log('Yes, I\'m connected!');
