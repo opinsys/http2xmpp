@@ -24,9 +24,16 @@ credentials
 
     curl -u aptirepo:secret -d message="Hello all" http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
 
+or
+
+     echo "Hello again" | curl -u aptirepo:secret -H "content-type: text/plain" -d @- http://0.0.0.0:8080/rooms/ourroom@conference.demo.opinsys.net
+
+
 Also the full content of the request body is used as the message if the content
 type if is `text/plain` or completely missing. This is useful with the [uri
 Ansible module][uri]
+
+
 
 ```yaml
 - name: Log update to http2xmpp
